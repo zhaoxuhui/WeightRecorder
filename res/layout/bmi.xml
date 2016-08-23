@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <EditText
+            android:textSize="18dp"
+            android:hint="身高，单位m"
+            android:id="@+id/et_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:inputType="numberDecimal"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:textSize="18dp"
+                android:text="我的标准体重为："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:id="@+id/tv_sW"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:textSize="18dp"
+                android:text=" kg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <TextView
+            android:text="注：标准体重是BMI指数为21时算出的。"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <Button
+            style="@style/normal_button"
+            android:id="@+id/btn_bmi"
+            android:onClick="SetTarget"
+            android:text="作为我的理想体重"
+            android:layout_width="match_parent"
+    />
+</LinearLayout>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.xuhui.WeightRecorder"
+          android:versionCode="4"
+          android:versionName="1.4">
+    <uses-sdk android:minSdkVersion="16"/>
+
+    <permission android:name="com.xuhui.WeightRecorder.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.xuhui.WeightRecorder.permission.JPUSH_MESSAGE" />
+
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+
+    <application android:label="@string/app_name" android:icon="@drawable/icon">
+
+        <meta-data android:name="JPUSH_APPKEY" android:value="c269f436976f5b649603675b"/>
+        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
+        <meta-data android:name="BDAPPID" android:value="8340789"/>
+        <meta-data android:name="BDAPPKEY" android:value="m157lWeU453BuinllLBFuuwZOYYY6o1j"/>
+
+        <service
+                android:name="cn.jpush.android.service.DownloadService"
+                android:enabled="true"
+                android:exported="false">
+        </service>
+        <service
+                android:name="cn.jpush.android.service.PushService"
+                android:enabled="true"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER"/>
+                <action android:name="cn.jpush.android.intent.REPORT"/>
+                <action android:name="cn.jpush.android.intent.PushService"/>
+                <action android:name="cn.jpush.android.intent.PUSH_TIME"/>
+            </intent-filter>
+        </service>
+
+
+        <service
+                android:name="cn.jpush.android.service.DaemonService"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter >
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+                <category android:name="com.xuhui.WeightRecorder"/>
+            </intent-filter>
+        </service>
+
+        <activity
+                android:name="cn.jpush.android.ui.PushActivity"
+                android:configChanges="orientation|keyboardHidden"
+                android:theme="@android:style/Theme.NoTitleBar"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="com.xuhui.WeightRecorder"/>
+            </intent-filter>
+        </activity>
+
+        <receiver
+                android:name="cn.jpush.android.service.PushReceiver"
+                android:enabled="true" >
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <category android:name="com.xuhui.WeightRecorder"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" android:exported="false"/>
+
+        <receiver
+                android:name="com.xuhui.WeightRecorder.MyReceiver"
+                android:exported="false"
+                android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION"/> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION"/>
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK"/> <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION"/><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.xuhui.WeightRecorder"/>
+            </intent-filter>
+        </receiver>
+
+        <activity
+                android:name="com.mob.tools.MobUIShell"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <data android:scheme="tencent1105522690"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".wxapi.WXEntryActivity"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:exported="true"
+                android:screenOrientation="portrait"/>
+
+        <activity
+                android:name="MyActivity"
+                android:label="体重记录器">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".Add"
+                  android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
+                  android:label="添加记录">
+        </activity>
+        <activity android:name=".Modify"
+                  android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
+                  android:label="编辑记录">
+        </activity>
+        <activity android:name=".Target"
+                  android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
+                  android:label="理想体重">
+        </activity>
+        <activity android:name=".Help"
+                  android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
+                  android:label="使用说明">
+        </activity>
+        <activity android:name=".BMI"
+                  android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
+                  android:label="标准体重计算">
+        </activity>
+
+        <activity
+                android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar"
+                android:name="com.xuhui.WeightRecorder.PushActivity"
+                android:label="推送信息">
+        </activity>
+        <activity
+                android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar"
+                android:name="com.xuhui.WeightRecorder.OpenWebSite"
+                android:label="打开网页">
+        </activity>
+        <activity
+                android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
+                android:name="com.xuhui.WeightRecorder.DownLoad"
+                android:label="检查更新">
+        </activity>
+    </application>
+</manifest>
